@@ -287,100 +287,16 @@ STORAGES = {
     },
 }
 
-
 # ============================================================
-# CODEVIEW EMAIL CONFIGURATION
-# ============================================================
-#
-# CodeView uses email for:
-# 1. Account verification.
-# 2. Password recovery.
-# 3. Account notifications.
-#
-# All sensitive credentials are stored in .env.
+# COLABVERSE EMAIL CONFIGURATION
 # ============================================================
 
-
-# Select the email backend.
-# SMTP sends real emails.
-# Console prints emails in the terminal.
-
-CODEVIEW_EMAIL_BACKEND = os.environ.get(
-    "CODEVIEW_EMAIL_BACKEND",
-    "django.core.mail.backends.console.EmailBackend",
-)
-
-
-# Sender name and email address.
+# Verified sender address used by Resend.
 CODEVIEW_EMAIL_FROM = os.environ.get(
     "CODEVIEW_EMAIL_FROM",
-    "Colabverse <no-reply@localhost>",
-)
+    "ColabVerse <noreply@mail.colabverse.name.ng>",
+).strip()
 
-
-# ============================================================
-# DJANGO 6.1 MAILERS CONFIGURATION
-# ============================================================
-
-MAILERS = {
-    "default": {
-        "BACKEND": CODEVIEW_EMAIL_BACKEND,
-
-        "OPTIONS": (
-            {
-                # Gmail SMTP server.
-                "host": os.environ.get(
-                    "CODEVIEW_EMAIL_HOST",
-                    "smtp.gmail.com",
-                ),
-
-                # Gmail SMTP port.
-                "port": int(
-                    os.environ.get(
-                        "CODEVIEW_EMAIL_PORT",
-                        "587",
-                    )
-                ),
-
-                # Gmail address.
-                "username": os.environ.get(
-                    "CODEVIEW_EMAIL_USER",
-                    "",
-                ),
-
-                # Google App Password.
-                "password": os.environ.get(
-                    "CODEVIEW_EMAIL_PASSWORD",
-                    "",
-                ),
-
-                # Enable TLS encryption.
-                "use_tls": (
-                    os.environ.get(
-                        "CODEVIEW_EMAIL_USE_TLS",
-                        "True",
-                    ).lower() == "true"
-                ),
-
-                # SSL is disabled when using STARTTLS.
-                "use_ssl": (
-                    os.environ.get(
-                        "CODEVIEW_EMAIL_USE_SSL",
-                        "False",
-                    ).lower() == "true"
-                ),
-
-                # Connection timeout.
-                "timeout": 15,
-            }
-
-            if CODEVIEW_EMAIL_BACKEND
-            == "django.core.mail.backends.smtp.EmailBackend"
-
-            else {}
-        ),
-    },
-}
 # Where users go after logging in.
 LOGIN_REDIRECT_URL = "groups"
 
